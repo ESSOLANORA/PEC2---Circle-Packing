@@ -11,13 +11,13 @@
             stroke-width: 1px;
         }
 
-        /* Base colors for main categories */
-        .renovable { fill: #4CAF50; }  /* Green for "renovable" */
-        .no-renovable { fill: #e41a1c; }  /* Red for "no renovable" */
+        /* Main colors for categories */
+        .renovable { fill: #4CAF50; }  /* Green for "Renovable" */
+        .no-renovable { fill: #e41a1c; }  /* Red for "No Renovable" */
 
-        /* Inner colors */
-        .inner-renovable { fill: #81C784; }  /* Light green for subcategories within "renovable" */
-        .inner-no-renovable { fill: #f28e2b; }  /* Light red/orange for subcategories within "no renovable" */
+        /* Inner colors for subcategories */
+        .inner-renovable { fill: #A5D6A7; }  /* Lighter green for subcategories within "Renovable" */
+        .inner-no-renovable { fill: #FFABAB; }  /* Lighter red for subcategories within "No Renovable" */
 
         /* Tooltip styling */
         .tooltip {
@@ -82,8 +82,8 @@
                 .attr("class", d => {
                     if (d.data.name === "Renovable") return "renovable";
                     else if (d.data.name === "No Renovable") return "no-renovable";
-                    else if (d.parent && d.parent.data.name === "renovable") return "inner-renovable";
-                    else if (d.parent && d.parent.data.name === "no renovable") return "inner-no-renovable";
+                    else if (d.parent && d.parent.data.name === "Renovable") return "inner-renovable";
+                    else if (d.parent && d.parent.data.name === "No Renovable") return "inner-no-renovable";
                     else return "";  // Default for other levels
                 })
                 .on("mouseover", function(event, d) {
@@ -113,10 +113,10 @@
 
             // Legend data with specified colors
             const legendData = [
-                { name: "renovable", color: "#4CAF50" },
-                { name: "no renovable", color: "#e41a1c" },
-                { name: "Inner Renovable", color: "#81C784" },
-                { name: "Inner No Renovable", color: "#f28e2b" }
+                { name: "Renovable", color: "#4CAF50" },
+                { name: "No Renovable", color: "#e41a1c" },
+                { name: "Inner Renovable", color: "#A5D6A7" },
+                { name: "Inner No Renovable", color: "#FFABAB" }
             ];
 
             // Add legend circles
