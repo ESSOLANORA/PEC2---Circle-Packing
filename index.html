@@ -7,7 +7,6 @@
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <style>
         .node circle {
-            fill: #69b3a2;
             stroke: #333;
             stroke-width: 1px;
         }
@@ -22,6 +21,19 @@
             font-size: 12px;
             fill: #333;
         }
+        /* Tooltip styling */
+        .tooltip {
+            position: absolute;
+            text-align: center;
+            width: auto;
+            padding: 8px;
+            font: 12px sans-serif;
+            background: #333;
+            color: #fff;
+            border: 0px;
+            border-radius: 4px;
+            pointer-events: none;
+        }
     </style>
 </head>
 <body>
@@ -29,6 +41,11 @@
     <svg width="700" height="700"></svg>
 
     <script>
+        // Tooltip div
+        const tooltip = d3.select("body").append("div")
+            .attr("class", "tooltip")
+            .style("opacity", 0);
+
         // Cargar el archivo JSON
         d3.json("energy_hierarchical_data.json").then(data => {
             const width = 700;
@@ -38,7 +55,7 @@
             // Crear un layout de 'Pack'
             const pack = d3.pack()
                 .size([width, height])
-                .padding(5);
+                .padding(3);  // Adjust padding for more space
 
             // Crear jerarquía
             const root = d3.hierarchy(data)
@@ -47,6 +64,11 @@
 
             pack(root);
 
+            // Escalas de color para diferenciar niveles
+            const colorScale = d3.scaleOrdinal()
+                .domain(["Total Consumption", "Continents", "Types of Consumption"])
+                .range(["#377eb8", "#4daf4a", "#ff7f00"]);
+
             // Crear nodos
             const node = svg.selectAll("g")
                 .data(root.descendants())
@@ -54,17 +76,28 @@
                 .attr("transform", d => `translate(${d.x},${d.y})`)
                 .attr("class", "node");
 
-            // Añadir círculos
+            // Añadir círculos con colores por nivel
             node.append("circle")
                 .attr("r", d => d.r)
-                .attr("fill", d => d.children ? "#69b3a2" : "#cce5df");
+                .attr("fill", d => d.depth === 0 ? colorScale("Total Consumption")
+                                : d.depth === 1 ? colorScale("Continents")
+                                : colorScale("Types of Consumption"))
+                .on("mouseover", function(event, d) {
+                    tooltip.transition()
+                        .duration(200)
+                        .style("opacity", .9);
+                    tooltip.html(`${d.data.name}: ${d.data.value ? d.data.value.toFixed(2) : ''} TWh`)
+                        .style("left", (event.pageX + 10) + "px")
+                        .style("top", (event.pageY - 28) + "px");
+                })
+                .on("mouseout", function() {
+                    tooltip.transition()
+                        .duration(500)
+                        .style("opacity", 0);
+                });
 
             // Añadir leyenda
             const legendData = ["Total Consumption", "Continents", "Types of Consumption"];
-            const colorScale = d3.scaleOrdinal()
-                .domain(legendData)
-                .range(["#69b3a2", "#8ebfbb", "#cce5df"]);
-
             svg.selectAll("legend-dots")
                 .data(legendData)
                 .enter()
