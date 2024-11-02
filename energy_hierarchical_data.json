@@ -1,0 +1,362 @@
+{
+  "name": "Energy Consumption",
+  "children": [
+    {
+      "name": "Africa",
+      "children": [
+        {
+          "name": "No Renovable",
+          "children": [
+            {
+              "name": "coal_consumption",
+              "value": 1020.557
+            },
+            {
+              "name": "fossil_fuel_consumption",
+              "value": 3253.599
+            },
+            {
+              "name": "gas_consumption",
+              "value": 1119.761
+            },
+            {
+              "name": "nuclear_consumption",
+              "value": 22.191
+            },
+            {
+              "name": "oil_consumption",
+              "value": 1113.2800000000002
+            }
+          ]
+        },
+        {
+          "name": "Renovable",
+          "children": [
+            {
+              "name": "biofuel_consumption",
+              "value": 0.697
+            },
+            {
+              "name": "hydro_consumption",
+              "value": 40.892
+            },
+            {
+              "name": "solar_consumption",
+              "value": 37.424
+            },
+            {
+              "name": "wind_consumption",
+              "value": 62.019
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Antarctica",
+      "children": [
+        {
+          "name": "No Renovable",
+          "children": [
+            {
+              "name": "coal_consumption",
+              "value": 0.0
+            },
+            {
+              "name": "fossil_fuel_consumption",
+              "value": 0.0
+            },
+            {
+              "name": "gas_consumption",
+              "value": 0.0
+            },
+            {
+              "name": "nuclear_consumption",
+              "value": 0.0
+            },
+            {
+              "name": "oil_consumption",
+              "value": 0.0
+            }
+          ]
+        },
+        {
+          "name": "Renovable",
+          "children": [
+            {
+              "name": "biofuel_consumption",
+              "value": 0.0
+            },
+            {
+              "name": "hydro_consumption",
+              "value": 0.0
+            },
+            {
+              "name": "solar_consumption",
+              "value": 0.0
+            },
+            {
+              "name": "wind_consumption",
+              "value": 0.0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Asia",
+      "children": [
+        {
+          "name": "No Renovable",
+          "children": [
+            {
+              "name": "coal_consumption",
+              "value": 37841.244
+            },
+            {
+              "name": "fossil_fuel_consumption",
+              "value": 74890.486
+            },
+            {
+              "name": "gas_consumption",
+              "value": 14834.957999999999
+            },
+            {
+              "name": "nuclear_consumption",
+              "value": 2043.925
+            },
+            {
+              "name": "oil_consumption",
+              "value": 23453.13
+            }
+          ]
+        },
+        {
+          "name": "Renovable",
+          "children": [
+            {
+              "name": "biofuel_consumption",
+              "value": 235.096
+            },
+            {
+              "name": "hydro_consumption",
+              "value": 4578.4310000000005
+            },
+            {
+              "name": "solar_consumption",
+              "value": 2412.313
+            },
+            {
+              "name": "wind_consumption",
+              "value": 2726.153
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Europe",
+      "children": [
+        {
+          "name": "No Renovable",
+          "children": [
+            {
+              "name": "coal_consumption",
+              "value": 2797.123
+            },
+            {
+              "name": "fossil_fuel_consumption",
+              "value": 20627.156
+            },
+            {
+              "name": "gas_consumption",
+              "value": 8777.63
+            },
+            {
+              "name": "nuclear_consumption",
+              "value": 2405.594
+            },
+            {
+              "name": "oil_consumption",
+              "value": 9063.103
+            }
+          ]
+        },
+        {
+          "name": "Renovable",
+          "children": [
+            {
+              "name": "biofuel_consumption",
+              "value": 244.844
+            },
+            {
+              "name": "hydro_consumption",
+              "value": 1901.53
+            },
+            {
+              "name": "solar_consumption",
+              "value": 714.107
+            },
+            {
+              "name": "wind_consumption",
+              "value": 1512.498
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "North America",
+      "children": [
+        {
+          "name": "No Renovable",
+          "children": [
+            {
+              "name": "coal_consumption",
+              "value": 2453.1639999999998
+            },
+            {
+              "name": "fossil_fuel_consumption",
+              "value": 25900.122000000003
+            },
+            {
+              "name": "gas_consumption",
+              "value": 11192.711
+            },
+            {
+              "name": "nuclear_consumption",
+              "value": 2287.201
+            },
+            {
+              "name": "oil_consumption",
+              "value": 12254.247
+            }
+          ]
+        },
+        {
+          "name": "Renovable",
+          "children": [
+            {
+              "name": "biofuel_consumption",
+              "value": 531.91
+            },
+            {
+              "name": "hydro_consumption",
+              "value": 1612.933
+            },
+            {
+              "name": "solar_consumption",
+              "value": 715.178
+            },
+            {
+              "name": "wind_consumption",
+              "value": 1273.161
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Oceania",
+      "children": [
+        {
+          "name": "No Renovable",
+          "children": [
+            {
+              "name": "coal_consumption",
+              "value": 430.401
+            },
+            {
+              "name": "fossil_fuel_consumption",
+              "value": 1559.94
+            },
+            {
+              "name": "gas_consumption",
+              "value": 439.27
+            },
+            {
+              "name": "nuclear_consumption",
+              "value": 0.0
+            },
+            {
+              "name": "oil_consumption",
+              "value": 690.269
+            }
+          ]
+        },
+        {
+          "name": "Renovable",
+          "children": [
+            {
+              "name": "biofuel_consumption",
+              "value": 1.353
+            },
+            {
+              "name": "hydro_consumption",
+              "value": 108.503
+            },
+            {
+              "name": "solar_consumption",
+              "value": 117.856
+            },
+            {
+              "name": "wind_consumption",
+              "value": 91.169
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "South America",
+      "children": [
+        {
+          "name": "No Renovable",
+          "children": [
+            {
+              "name": "coal_consumption",
+              "value": 274.721
+            },
+            {
+              "name": "fossil_fuel_consumption",
+              "value": 4479.380999999999
+            },
+            {
+              "name": "gas_consumption",
+              "value": 1352.687
+            },
+            {
+              "name": "nuclear_consumption",
+              "value": 58.510999999999996
+            },
+            {
+              "name": "oil_consumption",
+              "value": 2851.9719999999998
+            }
+          ]
+        },
+        {
+          "name": "Renovable",
+          "children": [
+            {
+              "name": "biofuel_consumption",
+              "value": 296.023
+            },
+            {
+              "name": "hydro_consumption",
+              "value": 1720.713
+            },
+            {
+              "name": "solar_consumption",
+              "value": 195.425
+            },
+            {
+              "name": "wind_consumption",
+              "value": 318.261
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
