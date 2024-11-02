@@ -53,57 +53,6 @@
       ]
     },
     {
-      "name": "Antarctica",
-      "children": [
-        {
-          "name": "No Renovable",
-          "children": [
-            {
-              "name": "coal_consumption",
-              "value": 0.0
-            },
-            {
-              "name": "fossil_fuel_consumption",
-              "value": 0.0
-            },
-            {
-              "name": "gas_consumption",
-              "value": 0.0
-            },
-            {
-              "name": "nuclear_consumption",
-              "value": 0.0
-            },
-            {
-              "name": "oil_consumption",
-              "value": 0.0
-            }
-          ]
-        },
-        {
-          "name": "Renovable",
-          "children": [
-            {
-              "name": "biofuel_consumption",
-              "value": 0.0
-            },
-            {
-              "name": "hydro_consumption",
-              "value": 0.0
-            },
-            {
-              "name": "solar_consumption",
-              "value": 0.0
-            },
-            {
-              "name": "wind_consumption",
-              "value": 0.0
-            }
-          ]
-        }
-      ]
-    },
-    {
       "name": "Asia",
       "children": [
         {
