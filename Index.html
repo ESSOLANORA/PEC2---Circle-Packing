@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Energy Consumption Nested Circles</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        .node circle {
+            fill: #69b3a2;
+            stroke: #333;
+            stroke-width: 1px;
+        }
+        .node text {
+            font-family: Arial, sans-serif;
+            font-size: 12px;
+            fill: #333;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+    <h2>Energy Consumption by Continent and Source</h2>
+    <svg width="600" height="600"></svg>
+    <script>
+        // Cargar el archivo JSON
+        d3.json("energy_hierarchical_data.json").then(data => {
+            const width = 600;
+            const height = 600;
+            const svg = d3.select("svg");
+
+            // Crear un layout de 'Pack'
+            const pack = d3.pack()
+                .size([width, height])
+                .padding(5);
+
+            // Crear jerarquía
+            const root = d3.hierarchy(data)
+                .sum(d => d.value)
+                .sort((a, b) => b.value - a.value);
+
+            pack(root);
+
+            // Crear nodos
+            const node = svg.selectAll("g")
+                .data(root.descendants())
+                .enter().append("g")
+                .attr("transform", d => `translate(${d.x},${d.y})`);
+
+            // Añadir círculos
+            node.append("circle")
+                .attr("r", d => d.r)
+                .attr("fill", d => d.children ? "#69b3a2" : "#cce5df");
+
+            // Añadir etiquetas
+            node.append("text")
+                .attr("dy", "0.3em")
+                .text(d => d.children ? "" : d.data.name)
+                .style("text-anchor", "middle");
+        });
+    </script>
+</body>
+</html>
