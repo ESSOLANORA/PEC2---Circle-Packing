@@ -10,10 +10,10 @@
             stroke: #333;
             stroke-width: 1px;
         }
-        /* Colores por nivel */
+        /* Improved colors for accessibility */
         .level-0 { fill: #377eb8; }  /* Total Consumption */
         .level-1 { fill: #4daf4a; }  /* Continents */
-        .level-2 { fill: #ff7f00; }  /* Types of Consumption */
+        .level-2 { fill: #e41a1c; }  /* Types of Consumption */
         
         /* Sombra para profundidad visual */
         .node circle {
@@ -34,11 +34,17 @@
             pointer-events: none;
         }
 
-        /* Leyenda */
+        /* Leyenda styling */
         .legend {
             font-family: Arial, sans-serif;
             font-size: 12px;
             fill: #333;
+        }
+        /* Enhanced text styling */
+        text {
+            font-weight: bold;
+            font-size: 14px;
+            text-shadow: 1px 1px 2px white;
         }
     </style>
 </head>
@@ -47,42 +53,35 @@
     <svg width="800" height="800"></svg>
 
     <script>
-        // Tooltip div
         const tooltip = d3.select("body").append("div")
             .attr("class", "tooltip")
             .style("opacity", 0);
 
-        // Cargar el archivo JSON
         d3.json("energy_hierarchical_data.json").then(data => {
             const width = 800;
             const height = 800;
             const svg = d3.select("svg");
 
-            // Crear un layout de 'Pack' con más espacio entre los círculos
             const pack = d3.pack()
                 .size([width, height])
                 .padding(6);
 
-            // Crear jerarquía
             const root = d3.hierarchy(data)
                 .sum(d => d.value)
                 .sort((a, b) => b.value - a.value);
 
             pack(root);
 
-            // Colores para cada nivel
             const colorScale = d3.scaleOrdinal()
                 .domain(["Total Consumption", "Continents", "Types of Consumption"])
-                .range(["#377eb8", "#4daf4a", "#ff7f00"]);
+                .range(["#377eb8", "#4daf4a", "#e41a1c"]);
 
-            // Crear nodos
             const node = svg.selectAll("g")
                 .data(root.descendants())
                 .enter().append("g")
                 .attr("transform", d => `translate(${d.x},${d.y})`)
                 .attr("class", "node");
 
-            // Añadir círculos con clases para diferenciar niveles
             node.append("circle")
                 .attr("r", d => d.r)
                 .attr("class", d => d.depth === 0 ? "level-0"
@@ -105,16 +104,13 @@
                         .style("opacity", 0);
                 });
 
-            // Añadir etiquetas en el nivel de continentes
             node.filter(d => d.depth === 1)
                 .append("text")
                 .attr("dy", "0.3em")
                 .text(d => d.data.name)
                 .style("text-anchor", "middle")
-                .style("fill", "black")
-                .style("font-size", "12px");
+                .style("fill", "black");
 
-            // Añadir leyenda detallada
             const legendData = root.children.map(d => ({
                 name: d.data.name,
                 color: colorScale("Continents")
