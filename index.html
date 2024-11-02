@@ -80,8 +80,8 @@
             node.append("circle")
                 .attr("r", d => d.r)
                 .attr("class", d => {
-                    if (d.data.name === "renovable") return "renovable";
-                    else if (d.data.name === "no renovable") return "no-renovable";
+                    if (d.data.name === "Renovable") return "renovable";
+                    else if (d.data.name === "No Renovable") return "no-renovable";
                     else if (d.parent && d.parent.data.name === "renovable") return "inner-renovable";
                     else if (d.parent && d.parent.data.name === "no renovable") return "inner-no-renovable";
                     else return "";  // Default for other levels
