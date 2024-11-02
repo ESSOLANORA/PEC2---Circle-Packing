@@ -11,7 +11,13 @@
             stroke-width: 1px;
         }
 
-        /* Main colors for categories */
+        /* Main color for the entire data */
+        .root { fill: #1f77b4; }  /* Blue for the entire dataset */
+
+        /* Colors for continents */
+        .continent { fill: #ffbb78; }  /* Light orange for continents */
+
+        /* Colors for main categories */
         .renovable { fill: #4CAF50; }  /* Green for "Renovable" */
         .no-renovable { fill: #e41a1c; }  /* Red for "No Renovable" */
 
@@ -80,7 +86,9 @@
             node.append("circle")
                 .attr("r", d => d.r)
                 .attr("class", d => {
-                    if (d.data.name === "Renovable") return "renovable";
+                    if (d.depth === 0) return "root";  // Top level (entire dataset)
+                    else if (d.depth === 1) return "continent";  // Continents
+                    else if (d.data.name === "Renovable") return "renovable";
                     else if (d.data.name === "No Renovable") return "no-renovable";
                     else if (d.parent && d.parent.data.name === "Renovable") return "inner-renovable";
                     else if (d.parent && d.parent.data.name === "No Renovable") return "inner-no-renovable";
@@ -113,6 +121,8 @@
 
             // Legend data with specified colors
             const legendData = [
+                { name: "Energy Consumption (Root)", color: "#1f77b4" },
+                { name: "Continents", color: "#ffbb78" },
                 { name: "Renovable", color: "#4CAF50" },
                 { name: "No Renovable", color: "#e41a1c" },
                 { name: "Inner Renovable", color: "#A5D6A7" },
