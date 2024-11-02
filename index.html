@@ -55,7 +55,7 @@
 </head>
 <body>
     <h2>Energy Consumption by Continent and Source</h2>
-    <svg width="1700" height="1700"></svg>
+    <svg width="1000" height="800"></svg>
 
     <script>
         const tooltip = d3.select("body").append("div")
@@ -63,8 +63,8 @@
             .style("opacity", 0);
 
         d3.json("energy_hierarchical_data.json").then(data => {
-            const width = 1300;
-            const height = 1300;
+            const width = 800;
+            const height = 800;
             const svg = d3.select("svg");
 
             const pack = d3.pack()
@@ -124,18 +124,16 @@
                 { name: "Energy Consumption (Root)", color: "#1f77b4" },
                 { name: "Continents", color: "#ffbb78" },
                 { name: "Renovable", color: "#4CAF50" },
-                { name: "No Renovable", color: "#e41a1c" },
-                { name: "Inner Renovable", color: "#A5D6A7" },
-                { name: "Inner No Renovable", color: "#FFABAB" }
+                { name: "No Renovable", color: "#e41a1c" }
             ];
 
-            // Add legend circles
+            // Add legend circles and position it in the top right
             svg.selectAll("legend-dots")
                 .data(legendData)
                 .enter()
                 .append("circle")
-                .attr("cx", 650)
-                .attr("cy", (d, i) => 30 + i * 25)
+                .attr("cx", 850)  // Position to the right
+                .attr("cy", (d, i) => 30 + i * 25)  // Vertical spacing
                 .attr("r", 7)
                 .style("fill", d => d.color);
 
@@ -144,7 +142,7 @@
                 .data(legendData)
                 .enter()
                 .append("text")
-                .attr("x", 670)
+                .attr("x", 870)  // Position text to the right of circles
                 .attr("y", (d, i) => 30 + i * 25)
                 .attr("dy", ".35em")
                 .text(d => d.name)
