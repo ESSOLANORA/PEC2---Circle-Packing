@@ -10,15 +10,14 @@
             stroke: #333;
             stroke-width: 1px;
         }
-        /* Improved colors for accessibility */
-        .level-0 { fill: #377eb8; }  /* Total Consumption */
-        .level-1 { fill: #4daf4a; }  /* Continents */
-        .level-2 { fill: #e41a1c; }  /* Types of Consumption */
-        
-        /* Sombra para profundidad visual */
-        .node circle {
-            filter: drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.2));
-        }
+
+        /* Base colors for main categories */
+        .renovable { fill: #4CAF50; }  /* Green for "renovable" */
+        .no-renovable { fill: #e41a1c; }  /* Red for "no renovable" */
+
+        /* Inner colors */
+        .inner-renovable { fill: #81C784; }  /* Light green for subcategories within "renovable" */
+        .inner-no-renovable { fill: #f28e2b; }  /* Light red/orange for subcategories within "no renovable" */
 
         /* Tooltip styling */
         .tooltip {
@@ -34,13 +33,13 @@
             pointer-events: none;
         }
 
-        /* Leyenda styling */
+        /* Legend styling */
         .legend {
             font-family: Arial, sans-serif;
             font-size: 12px;
             fill: #333;
         }
-        /* Enhanced text styling */
+        /* Text styling */
         text {
             font-weight: bold;
             font-size: 14px;
@@ -72,10 +71,6 @@
 
             pack(root);
 
-            const colorScale = d3.scaleOrdinal()
-                .domain(["Total Consumption", "Continents", "Types of Consumption"])
-                .range(["#377eb8", "#4daf4a", "#e41a1c"]);
-
             const node = svg.selectAll("g")
                 .data(root.descendants())
                 .enter().append("g")
@@ -84,9 +79,13 @@
 
             node.append("circle")
                 .attr("r", d => d.r)
-                .attr("class", d => d.depth === 0 ? "level-0"
-                                : d.depth === 1 ? "level-1"
-                                : "level-2")
+                .attr("class", d => {
+                    if (d.data.name === "renovable") return "renovable";
+                    else if (d.data.name === "no renovable") return "no-renovable";
+                    else if (d.parent && d.parent.data.name === "renovable") return "inner-renovable";
+                    else if (d.parent && d.parent.data.name === "no renovable") return "inner-no-renovable";
+                    else return "";  // Default for other levels
+                })
                 .on("mouseover", function(event, d) {
                     tooltip.transition()
                         .duration(200)
@@ -104,6 +103,7 @@
                         .style("opacity", 0);
                 });
 
+            // Add labels for continents
             node.filter(d => d.depth === 1)
                 .append("text")
                 .attr("dy", "0.3em")
@@ -111,17 +111,15 @@
                 .style("text-anchor", "middle")
                 .style("fill", "black");
 
-            const legendData = root.children.map(d => ({
-                name: d.data.name,
-                color: colorScale("Continents")
-            })).concat([{ name: "Total Consumption", color: colorScale("Total Consumption") }]);
+            // Legend data with specified colors
+            const legendData = [
+                { name: "renovable", color: "#4CAF50" },
+                { name: "no renovable", color: "#e41a1c" },
+                { name: "Inner Renovable", color: "#81C784" },
+                { name: "Inner No Renovable", color: "#f28e2b" }
+            ];
 
-            const typesOfConsumption = root.children[0].children.map(d => d.data.name);
-            legendData.push(...typesOfConsumption.map(name => ({
-                name,
-                color: colorScale("Types of Consumption")
-            })));
-
+            // Add legend circles
             svg.selectAll("legend-dots")
                 .data(legendData)
                 .enter()
@@ -131,6 +129,7 @@
                 .attr("r", 7)
                 .style("fill", d => d.color);
 
+            // Add legend labels
             svg.selectAll("legend-labels")
                 .data(legendData)
                 .enter()
