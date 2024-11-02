@@ -3,26 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Energy Consumption by Continent and Source</title>
+    <title>Energy Consumption by Continent and Source (in TWh for 2023)</title>
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <style>
+        
         .node circle {
             stroke: #333;
             stroke-width: 1px;
-            transition: transform 0.3s ease;  /* Animation for hover */
         }
 
         /* Main color for the entire data */
         .root { fill: #1f77b4; }  /* Blue for the entire dataset */
+
         /* Colors for continents */
         .continent { fill: #ffbb78; }  /* Light orange for continents */
+
         /* Colors for main categories */
         .renovable { fill: #4CAF50; }  /* Green for "Renovable" */
         .no-renovable { fill: #e41a1c; }  /* Red for "No Renovable" */
+
         /* Inner colors for subcategories */
-        .inner-renovable { fill: #A5D6A7; }  /* Lighter green */
-        .inner-no-renovable { fill: #FFABAB; }  /* Lighter red */
-        
+        .inner-renovable { fill: #A5D6A7; }  /* Lighter green for subcategories within "Renovable" */
+        .inner-no-renovable { fill: #FFABAB; }  /* Lighter red for subcategories within "No Renovable" */
+
         /* Tooltip styling */
         .tooltip {
             position: absolute;
@@ -35,7 +38,6 @@
             border: 0px;
             border-radius: 4px;
             pointer-events: none;
-            transition: opacity 0.3s ease;
         }
 
         /* Legend styling */
@@ -44,35 +46,17 @@
             font-size: 12px;
             fill: #333;
         }
-        
         /* Text styling */
         text {
             font-weight: bold;
             font-size: 14px;
             text-shadow: 1px 1px 2px white;
         }
-
-        /* Styling for footer information */
-        .footer-info {
-            font-family: Arial, sans-serif;
-            font-size: 12px;
-            color: #333;
-            margin-top: 20px;
-        }
-        
-        .footer-info a {
-            color: #1f77b4;
-            text-decoration: none;
-        }
-        
-        .footer-info a:hover {
-            text-decoration: underline;
-        }
     </style>
 </head>
 <body>
-    <h2>Energy Consumption by Continent and Source</h2>
-    <svg width="1000" height="800"></svg>
+    <h2>Energy Consumption by Continent and Source (in TWh for 2023)</h2>
+    <svg width="1500" height="1300"></svg>
 
     <script>
         const tooltip = d3.select("body").append("div")
@@ -80,8 +64,8 @@
             .style("opacity", 0);
 
         d3.json("energy_hierarchical_data.json").then(data => {
-            const width = 800;
-            const height = 800;
+            const width = 1000;
+            const height = 1000;
             const svg = d3.select("svg");
 
             const pack = d3.pack()
@@ -100,26 +84,18 @@
                 .attr("transform", d => `translate(${d.x},${d.y})`)
                 .attr("class", "node");
 
-            // Add circles with interactivity
             node.append("circle")
-                .attr("r", 0)  // Start with radius 0 for animation
-                .transition()  // Add transition for smooth growth
-                .duration(750)
                 .attr("r", d => d.r)
                 .attr("class", d => {
-                    if (d.depth === 0) return "root";
-                    else if (d.depth === 1) return "continent";
+                    if (d.depth === 0) return "root";  // Top level (entire dataset)
+                    else if (d.depth === 1) return "continent";  // Continents
                     else if (d.data.name === "Renovable") return "renovable";
                     else if (d.data.name === "No Renovable") return "no-renovable";
                     else if (d.parent && d.parent.data.name === "Renovable") return "inner-renovable";
                     else if (d.parent && d.parent.data.name === "No Renovable") return "inner-no-renovable";
-                    else return "";
+                    else return "";  // Default for other levels
                 })
                 .on("mouseover", function(event, d) {
-                    d3.select(this)
-                        .attr("stroke", "#000")
-                        .style("transform", "scale(1.05)");  // Scale up on hover
-                    
                     tooltip.transition()
                         .duration(200)
                         .style("opacity", .9);
@@ -131,46 +107,37 @@
                         .style("top", (event.pageY - 28) + "px");
                 })
                 .on("mouseout", function() {
-                    d3.select(this)
-                        .attr("stroke", null)
-                        .style("transform", "scale(1)");  // Reset scale
-                    
                     tooltip.transition()
                         .duration(500)
                         .style("opacity", 0);
                 });
 
-            // Add labels for continents
-            node.filter(d => d.depth === 1)
-                .append("text")
-                .attr("dy", "0.3em")
-                .text(d => d.data.name)
-                .style("text-anchor", "middle")
-                .style("fill", "black");
+//
 
+            // Legend data with specified colors
             const legendData = [
-                { name: "Energy Consumption (Root)", color: "#1f77b4" },
+                { name: "Energy Consumption (Total)", color: "#1f77b4" },
                 { name: "Continents", color: "#ffbb78" },
                 { name: "Renovable", color: "#4CAF50" },
-                { name: "No Renovable", color: "#e41a1c" },
-                { name: "Inner Renovable", color: "#A5D6A7" },
-                { name: "Inner No Renovable", color: "#FFABAB" }
+                { name: "No Renovable", color: "#e41a1c" }
             ];
 
+            // Add legend circles and position it in the top right
             svg.selectAll("legend-dots")
                 .data(legendData)
                 .enter()
                 .append("circle")
-                .attr("cx", 850)
-                .attr("cy", (d, i) => 30 + i * 25)
+                .attr("cx", 850)  // Position to the right
+                .attr("cy", (d, i) => 30 + i * 25)  // Vertical spacing
                 .attr("r", 7)
                 .style("fill", d => d.color);
 
+            // Add legend labels
             svg.selectAll("legend-labels")
                 .data(legendData)
                 .enter()
                 .append("text")
-                .attr("x", 870)
+                .attr("x", 870)  // Position text to the right of circles
                 .attr("y", (d, i) => 30 + i * 25)
                 .attr("dy", ".35em")
                 .text(d => d.name)
@@ -182,7 +149,7 @@
     <div class="footer-info">
         <p>Fuente: <a href="http://github.com/owid/energy-data" target="_blank">http://github.com/owid/energy-data</a></p>
         <p>Autor: Raúl Solano Calabuig - ESSOLANORA</p>
-        <p>Descripción: datos anuales (y acumulados) desde 2013 hasta 2023 del consumo energético según su fuente de obtención, clasificado por renovables y no renovables y por continentes.</p>
+        <p>Descripción: datos de 2023 del consumo energético según su fuente de obtención, clasificado por renovables y no renovables y por continentes.</p>
         <p>Elaboración: Noviembre 2024</p>
     </div>
 </body>
