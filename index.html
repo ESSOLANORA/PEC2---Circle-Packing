@@ -55,7 +55,7 @@
 </head>
 <body>
     <h2>Energy Consumption by Continent and Source</h2>
-    <svg width="1000" height="800"></svg>
+    <svg width="1500" height="1300"></svg>
 
     <script>
         const tooltip = d3.select("body").append("div")
@@ -63,8 +63,8 @@
             .style("opacity", 0);
 
         d3.json("energy_hierarchical_data.json").then(data => {
-            const width = 800;
-            const height = 800;
+            const width = 1000;
+            const height = 1000;
             const svg = d3.select("svg");
 
             const pack = d3.pack()
@@ -111,13 +111,7 @@
                         .style("opacity", 0);
                 });
 
-            // Add labels for continents
-            node.filter(d => d.depth === 1)
-                .append("text")
-                .attr("dy", "0.3em")
-                .text(d => d.data.name)
-                .style("text-anchor", "middle")
-                .style("fill", "black");
+//
 
             // Legend data with specified colors
             const legendData = [
