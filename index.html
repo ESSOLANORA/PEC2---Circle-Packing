@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Energy Consumption by Continent and Source</title>
+    <title>Energy Consumption by Continent and Source (in TWh for 2023)</title>
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <style>
         .node circle {
@@ -115,7 +115,7 @@
 
             // Legend data with specified colors
             const legendData = [
-                { name: "Energy Consumption (Root)", color: "#1f77b4" },
+                { name: "Energy Consumption (Total)", color: "#1f77b4" },
                 { name: "Continents", color: "#ffbb78" },
                 { name: "Renovable", color: "#4CAF50" },
                 { name: "No Renovable", color: "#e41a1c" }
@@ -143,5 +143,13 @@
                 .attr("class", "legend");
         });
     </script>
+
+    <!-- Footer information section -->
+    <div class="footer-info">
+        <p>Fuente: <a href="http://github.com/owid/energy-data" target="_blank">http://github.com/owid/energy-data</a></p>
+        <p>Autor: Raúl Solano Calabuig - ESSOLANORA</p>
+        <p>Descripción: datos anuales (y acumulados) desde 2013 hasta 2023 del consumo energético según su fuente de obtención, clasificado por renovables y no renovables y por continentes.</p>
+        <p>Elaboración: Noviembre 2024</p>
+    </div>
 </body>
 </html>
