@@ -11,9 +11,9 @@
             stroke-width: 1px;
         }
         /* Colores por nivel */
-        .level-0 { fill: #377eb8; }
-        .level-1 { fill: #4daf4a; }
-        .level-2 { fill: #ff7f00; }
+        .level-0 { fill: #377eb8; }  /* Total Consumption */
+        .level-1 { fill: #4daf4a; }  /* Continents */
+        .level-2 { fill: #ff7f00; }  /* Types of Consumption */
         
         /* Sombra para profundidad visual */
         .node circle {
@@ -94,8 +94,7 @@
                         .style("opacity", .9);
                     tooltip.html(`
                         <strong>${d.data.name}</strong><br>
-                        ${d.data.value ? `${d.data.value.toFixed(2)} TWh` : ''}<br>
-                        ${d.depth === 1 ? "Continent" : d.depth === 2 ? "Type of Consumption" : ""}
+                        ${d.data.value ? `${d.data.value.toFixed(2)} TWh` : ''}
                     `)
                         .style("left", (event.pageX + 10) + "px")
                         .style("top", (event.pageY - 28) + "px");
@@ -106,8 +105,27 @@
                         .style("opacity", 0);
                 });
 
-            // Añadir leyenda con colores
-            const legendData = ["Total Consumption", "Continents", "Types of Consumption"];
+            // Añadir etiquetas en el nivel de continentes
+            node.filter(d => d.depth === 1)
+                .append("text")
+                .attr("dy", "0.3em")
+                .text(d => d.data.name)
+                .style("text-anchor", "middle")
+                .style("fill", "black")
+                .style("font-size", "12px");
+
+            // Añadir leyenda detallada
+            const legendData = root.children.map(d => ({
+                name: d.data.name,
+                color: colorScale("Continents")
+            })).concat([{ name: "Total Consumption", color: colorScale("Total Consumption") }]);
+
+            const typesOfConsumption = root.children[0].children.map(d => d.data.name);
+            legendData.push(...typesOfConsumption.map(name => ({
+                name,
+                color: colorScale("Types of Consumption")
+            })));
+
             svg.selectAll("legend-dots")
                 .data(legendData)
                 .enter()
@@ -115,7 +133,7 @@
                 .attr("cx", 650)
                 .attr("cy", (d, i) => 30 + i * 25)
                 .attr("r", 7)
-                .style("fill", d => colorScale(d));
+                .style("fill", d => d.color);
 
             svg.selectAll("legend-labels")
                 .data(legendData)
@@ -124,7 +142,7 @@
                 .attr("x", 670)
                 .attr("y", (d, i) => 30 + i * 25)
                 .attr("dy", ".35em")
-                .text(d => d)
+                .text(d => d.name)
                 .attr("class", "legend");
         });
     </script>
